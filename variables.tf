@@ -28,6 +28,39 @@ variable "kms_key_policy" {
 POLICY
 }
 
+variable "kms_key_id" {
+  type = string
+  # Provide a default value or set it dynamically based on your requirements
+}
+
+
+# Create CloudWatch Log Metric Filter
+variable "log_metric_filter_name" {
+  type    = string
+  default = "log_metric_filter"
+}
+
+variable "log_metric_filter_pattern" {
+  type    = string
+  default = "invalid syntax"
+}
+
+variable "metric_transformation_name" {
+  type    = string
+  default = "InvalidSyntaxCount"
+}
+
+variable "metric_transformation_namespace" {
+  type    = string
+  default = "CustomMetrics"
+}
+
+variable "metric_transformation_value" {
+  type    = string
+  default = "1"
+}
+
+
 # Create CloudWatch Alarm
 
 variable "cloudwatch_alarm_name" {
@@ -95,31 +128,6 @@ variable "email_endpoint" {
   type        = string
 }
 
-variable "lambda_function_filename" {
-  description = "The filename of the Lambda function code."
-  type        = string
-}
-
-variable "lambda_function_handler" {
-  description = "The handler function of the Lambda function."
-  type        = string
-}
-
-variable "lambda_function_runtime" {
-  description = "The runtime environment for the Lambda function."
-  type        = string
-}
-
-variable "dynamodb_billing_mode" {
-  description = "The billing mode for the DynamoDB table."
-  type        = string
-  default     = "PAY_PER_REQUEST"
-}
-
-variable "email_subscription_endpoint" {
-  description = "endpoint"
-}
-
 # Create IAM role for Lambda function
 variable "lambda_role_name" {
   type    = string
@@ -142,4 +150,34 @@ variable "assume_role_policy_document" {
   ]
 }
 EOF
+}
+
+# Create Lambda function for ITSM ticket creation
+variable "lambda_function_filename" {
+  type = string
+}
+
+variable "lambda_function_name" {
+  type = string
+  default = "itsm_ticket_creator"
+}
+
+# Create CloudWatch Log Group
+variable "log_group_name" {
+  type    = string
+  default = "your_log_group_name"
+}
+
+variable "log_group_retention" {
+  type    = number
+  default = 30
+}
+
+
+variable "lambda_function_handler" {
+  type = string
+}
+
+variable "lambda_function_runtime" {
+  type = string
 }
